@@ -1,0 +1,21 @@
+{
+    "name": "CircleWorld.Features.Rendering",
+    "references": [
+        "Unity.Entities",
+        "Unity.Transforms",
+        "Unity.Collections",
+        "Unity.Mathematics",
+        "Unity.Burst",
+        "CircleWorld.Features.Cell",
+        "CircleWorld.Shared.Utils"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

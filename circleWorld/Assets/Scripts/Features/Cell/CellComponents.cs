@@ -22,7 +22,7 @@ namespace CircleWorld.Features.Cell
 
     public struct OrganismID : IComponentData
     {
-        public int Value;
+        public Entity Value;
     }
 
     public struct Constraint : IBufferElementData
