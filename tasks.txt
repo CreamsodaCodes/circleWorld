@@ -1,0 +1,96 @@
+# Circle World - Project Tasks
+
+## Task 1: Project Initialization & Core ECS Setup
+**Description**: Initialize the Unity project with necessary DOTS packages and establish the folder structure as per coding rules. Setup the basic Cell component data.
+**Scope**: 
+- Install Packages: `com.unity.entities`, `com.unity.burst`, `com.unity.collections`, `com.unity.mathematics`, `com.unity.rendering.hybrid`.
+- Create folder structure: `Assets/Scripts/Features/Cell/...`, `Assets/Scripts/Features/Physics/...`.
+- Create `CellComponents.cs`:
+    - `struct Position : IComponentData { float2 Value; }`
+    - `struct PreviousPosition : IComponentData { float2 Value; }`
+    - `struct PhysicsProperties : IComponentData { float Radius; float Friction; float Bounciness; }`
+    - `struct OrganismID : IComponentData { int Value; }`
+**References**: `implementation_plan_detailed.md` (Section 1.1, 4), `coding_rules.md` (Section 5).
+
+## Task 2: Core Physics - Integration System
+**Description**: Implement the Verlet Integration logic to move cells.
+**Scope**:
+- Create `IntegrationSystem.cs` in `Features/Physics`.
+- Implement a Burst-compiled Job.
+- Logic:
+    - `Velocity = Position - PreviousPosition`
+    - `PreviousPosition = Position`
+    - `Position += Velocity + (Forces * DeltaTime)`
+    - Apply World Bounds (clamp position to a fixed Box).
+- **TDD**: Write a test verifying that `Position` updates correctly based on a mocked `PreviousPosition`.
+**References**: `implementation_plan_detailed.md` (Section 2.1), `highlevel_decisions_and_paradigms.md` (Section 2).
+
+## Task 3: Core Physics - Constraints Structure & Logic
+**Description**: Implement the "Stick Constraints" that hold cells together.
+**Scope**:
+- Create `Constraint` Buffer Element: `struct Constraint : IBufferElementData { Entity Target; float RestLength; float Stiffness; }`.
+- Create `ConstraintRelaxationSystem.cs`.
+- Logic:
+    - Iterate all entities with `Constraint` buffer.
+    - Resolve distance vs `RestLength` by pushing/pulling both entities.
+    - Run multiple iterations per frame (e.g., 4-8).
+- **TDD**: Write a test with 2 entities. Check that they move closer/further to match `RestLength` after a system update.
+**References**: `implementation_plan_detailed.md` (Section 2.1), `overview.md` (Section 4).
+
+## Task 4: Core Physics - Collision System
+**Description**: Implement efficient collision detection using a Spatial Hash.
+**Scope**:
+- Create `CollisionSystem.cs`.
+- Use `NativeMultiHashMap<int, Entity>`.
+- Job 1: Populate Hash Map based on Grid ID.
+- Job 2: Query neighbors, check `Distance < (R1 + R2)`, apply separation impulse.
+- **TDD**: Create two overlapping cells. Assert they have separated after system execution.
+**References**: `implementation_plan_detailed.md` (Section 2.1), `overview.md` (Section 4).
+
+## Task 5: Rendering - Hybrid Renderer Setup
+**Description**: Connect ECS data to Unity's visual representation.
+**Scope**:
+- Create `RenderSystem.cs` (or utilize built-in `EntitiesGraphics` if applicable/preferred, but plan mentions `RenderMesh`).
+- Setup a `Mesh` (Circle) and `Material` (Instanced).
+- Ensure `LocalToWorld` is updated from `Position`.
+- Implement visual for Constraints (e.g., a Stretched Quad Mesh Entity for each connection, OR a custom drawing solution). *Note: Plan suggests Mesh Entities for lines.*
+**References**: `implementation_plan_detailed.md` (Section 3).
+
+## Task 6: Gameplay - Cell Identity & Feeding
+**Description**: Implement Cell Types and the logic for consumption.
+**Scope**:
+- Create `CellType` Component: `enum Kind { Structure, Connector, Mouth, Storage, Reproducer, Food }`.
+- Create `Energy` Component.
+- Create `EatingSystem.cs`.
+- Logic: If collision pair is `Mouth` and `Food`:
+    - Destroy `Food` entity.
+    - Add Energy to the `Mouth`'s `OrganismID` (requires looking up the Organism Entity).
+- **TDD**: Test `Mouth` touches `Food` -> Food isDestroyed, Energy increases.
+**References**: `implementation_plan_detailed.md` (Section 1.2, 2.2).
+
+## Task 7: Gameplay - Merging Logic
+**Description**: Implement the logic for attaching two separate organisms.
+**Scope**:
+- Create `MergingSystem.cs`.
+- Logic: If `Connector` collides with `Structure` of different `OrganismID`:
+    - Merge IDs (Flood fill or component update).
+    - Create a new `Constraint` linking them.
+- **TDD**: Two separate organisms collide at connector. Assert they share `OrganismID` and have a Constraint.
+**References**: `overview.md` (Section 5.2), `implementation_plan_detailed.md` (Section 2.2).
+
+## Task 8: Gameplay - Reproduction
+**Description**: Implement the cloning of an organism.
+**Scope**:
+- Create `ReproductionSystem.cs`.
+- Logic: Usage of `EntityManager.Instantiate`.
+- Graph Traversal: Need to copy the blueprint of *connected* cells.
+- Re-mapping: Ensure new Constraints point to the *new* entities, not the old ones.
+**References**: `overview.md` (Section 5.3), `implementation_plan_detailed.md` (Section 2.2).
+
+## Task 9: Input & Spawning Check
+**Description**: Allow user interaction to spawn entities for testing.
+**Scope**:
+- Create `InputSystem.cs` and `SpawningSystem.cs`.
+- Mouse Click -> Raycast -> Spawn "Cell" or "Food" at position.
+- Use `EntityCommandBuffer` for safe spawning.
+**References**: `highlevel_decisions_and_paradigms.md` (Section 4.1).
