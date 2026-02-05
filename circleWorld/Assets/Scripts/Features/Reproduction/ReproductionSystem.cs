@@ -134,6 +134,14 @@ namespace CircleWorld.Features.Reproduction
                     var pos = state.EntityManager.GetComponentData<Position>(clone);
                     state.EntityManager.SetComponentData(clone, new PreviousPosition { Value = pos.Value });
                 }
+
+                // 4. Assign New Organism ID
+                // The new organism ID is defined by the index of the new root (clonedEntities[0]).
+                // We apply this to ALL clones in the group.
+                if (state.EntityManager.HasComponent<OrganismID>(clone))
+                {
+                    state.EntityManager.SetComponentData(clone, new OrganismID { Value = clonedEntities[0].Index });
+                }
             }
 
             map.Dispose();

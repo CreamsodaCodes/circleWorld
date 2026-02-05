@@ -1,2 +1,8 @@
 ﻿<Solution>
+  <Project Path="CircleWorld.Features.Cell.csproj" />
+  <Project Path="CircleWorld.Features.Physics.csproj" />
+  <Project Path="CircleWorld.Features.Rendering.csproj" />
+  <Project Path="CircleWorld.Features.Physics.Tests.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="CircleWorld.Features.Rendering.Tests.csproj" />
 </Solution>

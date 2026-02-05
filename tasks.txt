@@ -87,7 +87,7 @@
 - Re-mapping: Ensure new Constraints point to the *new* entities, not the old ones.
 **References**: `overview.md` (Section 5.3), `implementation_plan_detailed.md` (Section 2.2).
 
-## Task 9: Input & Spawning Check
+## Task 9: Input & Spawning Check [Completed]
 **Description**: Allow user interaction to spawn entities for testing.
 **Scope**:
 - Create `InputSystem.cs` and `SpawningSystem.cs`.
