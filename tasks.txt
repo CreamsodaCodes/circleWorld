@@ -68,7 +68,7 @@
 - **TDD**: Test `Mouth` touches `Food` -> Food isDestroyed, Energy increases.
 **References**: `implementation_plan_detailed.md` (Section 1.2, 2.2).
 
-## Task 7: Gameplay - Merging Logic
+## Task 7: Gameplay - Merging Logic [Completed]
 **Description**: Implement the logic for attaching two separate organisms.
 **Scope**:
 - Create `MergingSystem.cs`.

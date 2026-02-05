@@ -60,7 +60,7 @@ All data structures must be **unmanaged structs**.
         *   Mark Food for destruction.
         *   Add Energy to `Mouth.OrganismID` (Buffer or component lookup).
 
-*   **5. `MergingSystem`**
+*   **5. `MergingSystem`** [Implemented]
     *   **Job**: Iterate pairs from `CollisionSystem`.
     *   If `Connector` touches `Structure` (and different OrganismID):
         *   **Event**: Schedule Merge (`EntityCommandBuffer`).
