@@ -56,7 +56,7 @@
 - Implement visual for Constraints (e.g., a Stretched Quad Mesh Entity for each connection, OR a custom drawing solution). *Note: Plan suggests Mesh Entities for lines.*
 **References**: `implementation_plan_detailed.md` (Section 3).
 
-## Task 6: Gameplay - Cell Identity & Feeding
+## Task 6: Gameplay - Cell Identity & Feeding [Completed]
 **Description**: Implement Cell Types and the logic for consumption.
 **Scope**:
 - Create `CellType` Component: `enum Kind { Structure, Connector, Mouth, Storage, Reproducer, Food }`.
