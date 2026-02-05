@@ -1,6 +1,6 @@
 # Circle World - Project Tasks
 
-## Task 1: Project Initialization & Core ECS Setup
+## Task 1: Project Initialization & Core ECS Setup [Completed]
 **Description**: Initialize the Unity project with necessary DOTS packages and establish the folder structure as per coding rules. Setup the basic Cell component data.
 **Scope**: 
 - Install Packages: `com.unity.entities`, `com.unity.burst`, `com.unity.collections`, `com.unity.mathematics`, `com.unity.rendering.hybrid`.

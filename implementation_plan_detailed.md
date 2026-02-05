@@ -3,7 +3,7 @@
 ## 1. Core Data (Components)
 All data structures must be **unmanaged structs**.
 
-### 1.1 Cell Data
+### 1.1 Cell Data [Implemented]
 *   **File**: `Assets/Scripts/ECS/Components/CellComponents.cs`
 *   **`struct Position : IComponentData`**
     *   `float2 Value;`
@@ -87,7 +87,7 @@ Pure ECS rendering can be complex. We will use **Unity.Rendering** (Hybrid Rende
 ---
 
 ## 4. Execution Plan
-1.  **Project Setup**: Install `Entities`, `Burst`, `Collections`, `Jobs` packages.
+1.  **Project Setup**: Install `Entities`, `Burst`, `Collections`, `Jobs` packages. [Completed]
 2.  **Basic Physics**: Implement `IntegrationSystem` and `RenderSystem` (Balls moving).
 3.  **Interaction**: Implement `CollisionSystem` (Balls bouncing).
 4.  **Structure**: Implement `ConstraintSystem` and `Constraint` buffer (Balls sticking).
